@@ -1,0 +1,4 @@
+aiohttp>=3.8
+PySide6>=6.5
+quii-helper==0.3.0
+imageio-ffmpeg>=0.6

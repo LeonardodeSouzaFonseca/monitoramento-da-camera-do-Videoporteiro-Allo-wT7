@@ -1,0 +1,29 @@
+open_door:
+  fields:
+    entry_id:
+      required: false
+      selector:
+        config_entry:
+          integration: allo_wt7
+    lock_number:
+      required: false
+      default: 1
+      example: 1
+      selector:
+        number:
+          min: 1
+          max: 4
+          mode: box
+
+send_audio:
+  fields:
+    entry_id:
+      required: false
+      selector:
+        config_entry:
+          integration: allo_wt7
+    media_content_id:
+      required: true
+      example: "media-source://tts/cloud?message=Ja+estou+indo"
+      selector:
+        text:

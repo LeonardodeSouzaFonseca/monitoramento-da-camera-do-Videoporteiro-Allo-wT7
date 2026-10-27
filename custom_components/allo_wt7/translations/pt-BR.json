@@ -1,0 +1,97 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Intelbras Allo wT7",
+        "description": "Conecte o Home Assistant ao seu videoporteiro Intelbras Allo wT7.\n\nVocê vai precisar de:\n- Email e senha da sua conta Allo Plus\n- A senha numérica de abertura que você definiu no app na primeira vez\n- O IP local do monitor wT7 na sua rede\n\nApós configurar, cada porta vira uma entidade `button.*` no HA. Cada clique dispara um pulso de abertura no relé do wT7. (Portões de garagem geralmente alternam: um segundo clique fecha.)",
+        "data": {
+          "email": "Email (conta Allo Plus)",
+          "password": "Senha (conta Allo Plus)",
+          "monitor_ip": "IP do monitor na rede local",
+          "require_pin": "Dispositivo exige senha de abertura",
+          "unlock_pin": "PIN numérico de abertura",
+          "door1_name": "Nome da porta 1",
+          "door2_enabled": "Dispositivo tem segunda porta",
+          "door2_name": "Nome da porta 2"
+        },
+        "data_description": {
+          "require_pin": "Deixe marcado (padrão). Desmarque apenas se o seu modelo abre a porta sem senha — nesse caso o campo abaixo é ignorado.",
+          "unlock_pin": "A senha numérica de abertura definida no app/porteiro. Ignorado se a opção acima estiver desmarcada."
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Email ou senha do Allo Plus inválidos.",
+      "pin_required": "Informe a senha de abertura, ou desmarque \"Dispositivo exige senha de abertura\" se o seu modelo abre sem senha.",
+      "invalid_pin": "A senha de abertura não bate com a do dispositivo. Use a senha numérica de abertura definida no app Allo Plus (não a senha de login da conta). Se nunca a definiu, configure-a no app primeiro.",
+      "cannot_connect": "Não foi possível conectar à nuvem Allo Plus ou ao monitor.",
+      "unknown": "Erro inesperado. Veja o log do Home Assistant para detalhes."
+    },
+    "abort": {
+      "already_configured": "Este dispositivo já está configurado."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configurações da campainha",
+        "data": {
+          "doorbell_enabled": "Ativar detecção de campainha",
+          "doorbell_poll_interval_s": "Intervalo de consulta em segundos (1–30)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "camera": {
+      "camera": {
+        "name": "Câmera"
+      }
+    },
+    "event": {
+      "doorbell": {
+        "name": "Campainha"
+      }
+    },
+    "image": {
+      "last_ring": {
+        "name": "Último toque"
+      }
+    },
+    "media_player": {
+      "speaker": {
+        "name": "Alto-falante"
+      }
+    }
+  },
+  "services": {
+    "open_door": {
+      "name": "Abrir porta",
+      "description": "Dispara um pulso de abertura no wT7 para o número de fechadura indicado. Use quando uma automação não deve depender de quais entidades de porta estão expostas.",
+      "fields": {
+        "entry_id": {
+          "name": "Entrada de configuração",
+          "description": "A entrada do Allo wT7. Pode omitir se houver só um wT7."
+        },
+        "lock_number": {
+          "name": "Número da fechadura",
+          "description": "Qual relé acionar. 1 = porta social, 2 = portão da garagem (ou o que você mapeou). Padrão: 1."
+        }
+      }
+    },
+    "send_audio": {
+      "name": "Enviar áudio ao alto-falante da porta",
+      "description": "Toca um áudio no alto-falante da porta do wT7 (fala), por exemplo uma mensagem gravada ou uma frase em texto para voz. Máximo de 60 segundos. Enquanto toca, a única sessão de vídeo do porteiro é usada, então o app Allo Plus e o porteiro físico ficam indisponíveis.",
+      "fields": {
+        "entry_id": {
+          "name": "Entrada de configuração",
+          "description": "A entrada do Allo wT7. Pode omitir se houver só um wT7."
+        },
+        "media_content_id": {
+          "name": "Áudio",
+          "description": "O que tocar: uma URL http(s), um item media-source:// (incluindo media-source://tts/... para texto para voz), uma URL /local/... ou um caminho de arquivo permitido pelo Home Assistant (ex.: /config/www/oi.mp3)."
+        }
+      }
+    }
+  }
+}
